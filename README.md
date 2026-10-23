@@ -1,128 +1,170 @@
 # Mobile Capture Extractor
 
-저장해 둔 캡처, 다시 찾기 어렵나요?
+**Automatically turn synced phone screenshots into organized notes.**
 
-캡처를 보내면 내용을 읽고 정리해줘요.
+Take a screenshot on your phone.
 
-같은 글을 나눠 찍은 캡처는 하나로 묶어요.
+Let your configured sync and Codex automation handle the next steps.
 
-**Codex에서 쓰는 스킬**이에요.
+This is a **Codex skill for an automated workflow**.
 
-별도 OCR 앱이나 혼자 자동 실행되는 앱은 아니에요.
+It is not a standalone phone app.
 
-## 무엇을 보내면 되나요?
+## How it works
 
-정리할 캡처 이미지와 원하는 정리 방식을 알려주세요.
+1. Your Galaxy phone syncs screenshots to OneDrive.
+2. A Codex automation checks the synced inbox.
+3. Codex reads new screenshots and groups pages from the same post.
+4. It saves notes and original images to Notion.
+5. If you have allowed cleanup, it removes verified originals and checks that deletion syncs back to your phone.
+
+**Set up phone sync, Notion access, and a Codex automation first.**
+
+Installing this skill alone does not turn them on.
+
+## What goes in?
+
+Screenshots in your synced inbox.
+
+You do not need to upload each image by hand once the workflow is set up.
+
+## What comes out?
+
+- Text read from the screenshots.
+- Source links, when they can be found.
+- Short summaries.
+- Original images attached to the notes.
+- Questions about anything unclear.
+
+For example:
+
+> **Input:** 3 screenshots of one article.
+>
+> **Result:** 1 Notion note with the text, summary, and all 3 images.
+>
+> **Needs review:** The last sentence is cut off.
+>
+> **Cleanup:** Keep the originals until the saved images have been checked.
+
+Charts and tables can also be saved as separate crops.
+
+The original images are kept with the record.
+
+## Try one batch first
 
 ```text
 $mobile-capture-extractor
-이 캡처 5장을 읽어줘.
-같은 글은 묶고, 원문과 요약을 나눠 정리해줘.
-읽기 어려운 부분은 표시해줘. 원본은 지우지 마.
+Check my synced screenshots inbox.
+Use the pm-job profile.
+Save up to 5 screenshots to my connected Notion database.
+Keep the originals for this first test.
+Tell me what worked and what needs review.
 ```
 
-## 어떤 결과를 받나요?
+The included `pm-job` profile organizes AI, IT, robotics, and mobility material.
 
-- 캡처에 보이는 글
-- 확인할 수 있는 출처와 링크
-- 짧은 요약
-- 읽기 어렵거나 확인이 필요한 부분
+It adds topics, keywords, summaries, and questions to think about.
 
-아래는 결과 형식의 예시예요.
+## Good to know
 
-> **묶음:** 캡처 1~3번은 같은 글이에요.
->
-> **원문:** 화면에서 읽은 내용을 적어요.
->
-> **요약:** 핵심 내용을 짧게 정리해요.
->
-> **확인 필요:** 마지막 문장이 잘렸어요.
-> 원문 링크는 찾지 못했어요.
+Blurry text can be read incorrectly.
 
-표나 그래프는 필요한 부분을 따로 잘라 보관할 수도 있어요.
+Missing text is not filled in by guessing.
 
-잘라낸 이미지와 원본은 구분해요.
+Source links may be unavailable.
 
-## Notion에도 정리할 수 있어요
+Cleanup needs your permission and successful save checks.
 
-Notion 연결과 저장할 곳이 준비돼 있어야 해요.
+Files that need review or failed to save stay in the inbox.
 
-원본 이미지가 잘 올라갔는지도 확인해요.
-
-AI·IT·로봇·모빌리티 자료를 모은다면 이렇게 요청하세요.
-
-```text
-$mobile-capture-extractor
-이 캡처를 pm-job 프로필로 정리해줘.
-연결된 Notion에 원본, 요약, 시사점을 저장해줘.
-이번에는 원본을 삭제하지 마.
-```
-
-`pm-job`은 이 자료들을 정리하기 위한 분류 규칙이에요.
-다른 용도라면 원하는 방식을 알려주세요.
-
-## 알아두세요
-
-흐리거나 잘린 글은 틀리게 읽을 수 있어요.
-
-보이지 않는 내용은 추측해서 채우지 않아요.
-
-출처 링크를 항상 찾을 수 있는 것은 아니에요.
-
-원본 삭제는 먼저 허용한 경우에만 진행해요.
-
-저장과 원본 첨부를 확인하지 못하면 지우지 않아요.
-
-캡처와 개인 기록은 이 공개 저장소에 올리지 마세요.
+Keep screenshots, private notes, and processing logs out of this public repository.
 
 <details>
-<summary>설치 방법과 자세한 조건</summary>
+<summary>Setup, automation, and safety details</summary>
 
-프로젝트의 `.agents/skills/mobile-capture-extractor` 폴더에 전체 파일을 넣으세요.
+### Install the skill
 
-이미 설치했다면 덮어쓰기 전에 비교하세요.
+Put all files in `.agents/skills/mobile-capture-extractor` inside your project.
 
-Git을 쓴다면 프로젝트 폴더에서 실행할 수 있어요.
+Compare any existing installation before replacing it.
+
+If you use Git:
 
 ```sh
- git clone https://github.com/nana-park/mobile-capture-extractor.git .agents/skills/mobile-capture-extractor
+git clone https://github.com/nana-park/mobile-capture-extractor.git .agents/skills/mobile-capture-extractor
 ```
 
-Codex에서 스킬을 불러올 수 있는지 확인하세요.
+Open the project in Codex and check that the skill is available.
 
-이미지 판독과 파일 접근 기능이 필요해요.
+Keep `references/profiles/pm-job.md` in its existing location.
 
-Notion 연결, 업로드 권한, 동기화는 별도로 준비해야 해요.
+### Connect the workflow
 
-이 저장소에는 OCR 엔진이나 인증 정보가 없어요.
+Set up Galaxy-to-OneDrive screenshot sync.
 
-포함 파일은 다음과 같아요.
+Make the synced inbox available to Codex.
 
-- `SKILL.md`: 캡처를 읽고 검증하는 기본 규칙
-- `references/profiles/pm-job.md`: 취업 준비용 기술 자료 분류와 Notion 기록 규칙
+Connect your Notion destination and allow image uploads.
 
-프로필을 지정하지 않으면 범용 추출만 해요.
+Configure a recurring Codex automation to run this skill.
 
-파일 경로·크기·수정 시각과 가능한 경우 해시를 이용해 새 파일과 중복을 구분해요.
+Choose your own schedule and check its timezone.
 
-처리 원장을 사용한다면 공개 저장소 밖에 보관하세요.
+Codex needs access to the files and connected services when the automation runs.
 
-프로필에는 OneDrive·갤럭시 동기화와 처리 후 삭제를 전제로 한 규칙이 있어요.
+The repository does not include a sync client, OCR engine, credentials, or a background service.
 
-이 문구 자체가 새 사용자의 삭제 허용을 뜻하지는 않아요.
+### Existing setup example
 
-코어의 명시적 허용 조건과 저장·첨부·재열기·대상 일치 검증을 먼저 따라야 해요.
+The inspected workspace uses a OneDrive folder named `screenshots-inbox`.
 
-동기화 폴더는 작은 표본으로 삭제 전파를 시험해야 해요.
+An active Codex automation is configured for 09:00 and 18:00.
 
-모호한 파일은 보존해요.
+Its configuration does not explicitly specify a timezone.
 
-프로필의 이미지 클립보드 업로드는 환경에 따라 지원되지 않을 수 있어요.
+It checks new screenshots first, then older unprocessed files.
 
-원본을 다시 열어 확인할 수 없다면 완료하거나 삭제하지 않아요.
+Each run handles up to 10 images.
 
-원본에는 `agents/` 폴더가 없어요.
-`nana-park/skills`의 `875982c984d8fd7f40931826dc4a73ff67e1e5cb` 커밋에서 스킬과 프로필만 그대로 가져왔어요.
-다른 스킬, 이전 Git 이력, 개인 처리 데이터는 포함하지 않았어요.
+It saves results to a Notion database and keeps a private local processing ledger.
+
+Failed items are marked for retry.
+
+Deletion sync is checked on a later run.
+
+This is an example of an external setup, not a schedule bundled with this skill.
+
+The phone's live sync settings and end-to-end execution were not tested for this README update.
+
+### Cleanup rules
+
+The core skill requires explicit permission for deletion and deletion sync.
+
+The profile's automatic cleanup wording is not permission from a new user.
+
+For archived screenshots, verify the note, original attachment, reopening, and file match before deletion.
+
+Test deletion sync on a small sample before a large batch.
+
+Keep unclear files and failed uploads.
+
+The included profile also describes removing reviewed, out-of-scope files.
+
+Agree on that policy before enabling cleanup.
+
+Some environments cannot use the profile's image clipboard upload method.
+
+Do not mark an item complete if its saved original cannot be reopened.
+
+### Files
+
+- `SKILL.md`: extraction, grouping, verification, and cleanup rules.
+- `references/profiles/pm-job.md`: classification and Notion layout.
+
+The source had no `agents/` folder.
+
+Only these files were copied from `nana-park/skills` at commit `875982c984d8fd7f40931826dc4a73ff67e1e5cb`.
+
+Other skills, personal data, and the original Git history were not copied.
 
 </details>
