@@ -1,6 +1,6 @@
 # Mobile Capture Extractor
 
-**Automatically turn synced phone screenshots into organized notes.**
+**Sync phone screenshots and automatically organize them in Notion.**
 
 Take a screenshot on your phone.
 
@@ -22,11 +22,9 @@ It is not a standalone phone app.
 
 Installing this skill alone does not turn them on.
 
-## What goes in?
+Once set up, screenshots are picked up from the synced inbox.
 
-Screenshots in your synced inbox.
-
-You do not need to upload each image by hand once the workflow is set up.
+You do not need to send each image in a chat.
 
 ## What comes out?
 
